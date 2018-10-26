@@ -40,7 +40,7 @@ int main(int argc, char* args[]) {
 
 
     int d = 8;
-    int time = 120;
+    int time = 140;
     std::string out3 = "";
     // if d is dividable by 4
     // and time is not more than 200
@@ -48,7 +48,7 @@ int main(int argc, char* args[]) {
     // if time is more than 200
     // set out3 to "Time out"
     // otherwise set out3 to "Run Forest Run!"
-    if(d%4 != 0 && time < 200){out3 = "Check";};
+    if(time < 200){if(d%4 ==0){out3 = "check";} else{out3 = "Run Forest Run!";};}else{out3 = "Timeout";};
 
 
 
