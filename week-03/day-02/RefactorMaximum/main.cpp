@@ -4,28 +4,31 @@ int size();
 
 void elements(int *Array, int ArrayLength);
 
-int FindMaxi(int *Array, int Length);
+int *FindMaxi(int *Array, int Length);
 
 int main() {
 
     int MyArray[size()];
     elements(MyArray, sizeof(MyArray) / sizeof(MyArray[0]));
-    std::cout << "The maximum of the array is: " << FindMaxi(MyArray, sizeof(MyArray)/sizeof(MyArray[0])) << std::endl;
+    std::cout << "The maximum of the array is: " << *FindMaxi(MyArray, sizeof(MyArray)/sizeof(MyArray[0])) << std::endl;
+    std::cout << "The memory address of the maximum of the array is: " << FindMaxi(MyArray, sizeof(MyArray)/sizeof(MyArray[0])) << std::endl;
     return 0;
 }
 
-int FindMaxi(int *Array, int Length)
+int *FindMaxi(int *Array, int Length)
 {
     int maxi = Array[0];
+    int *maxiMemory;
     for (int j = 0;j<Length;++j) {
 
         if (Array[j] > maxi){
 
             maxi = Array[j];
+            maxiMemory = &Array[j];
         }
 
     }
-    return maxi;
+    return maxiMemory;
 }
 
 void elements(int *Array, int ArrayLength) {
