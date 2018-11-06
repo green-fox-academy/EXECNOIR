@@ -11,7 +11,7 @@ int main(int argc, char* args[]) {
         for (int j = 0; j < i; ++j) {
             std::cout << "*" ;
         }
-        std::cout<< "\n";
+        std::cout<< std::endl;
     }
 
     // Write a program that reads a number from the standard input, then draws a
