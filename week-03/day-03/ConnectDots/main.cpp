@@ -1,8 +1,5 @@
 #include <iostream>
 #include <SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -22,51 +19,49 @@ SDL_Window* gWindow = nullptr;
 
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
-void HappyLittleLines()
-{
-    //srand (time(NULL));
-    SDL_RenderDrawLine(gRenderer, SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2, SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    int x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
-    int y = 0;
-    for (int i = 0; i < 3 ; ++i) {
 
-        y = y + SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
+void greenfox(int **coordinates){
 
-        for (int j = 0; j < (SCREEN_WIDTH/2/10) ; ++j) {
+    for (int i = 0; i < 7; ++i) {
 
-            x = x+10;
-            SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
-            SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
+        SDL_RenderDrawLine( gRenderer, coordinates[i][0], coordinates[i][1],coordinates[i+1][0],coordinates[i+1][1]);
 
-        }
-        x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
     }
-    x = 0;
-    y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
-    for (int k = 0; k < 3 ; ++k) {
-
-        x = x + SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
-
-        for (int l = 0; l < (SCREEN_HEIGHT/2/10) ; ++l) {
-
-            y = y+10;
-            SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
-            SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-        }
-        y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
-    }
-
 }
+
 void draw()
 {
+    int coordinates2[4][4] = {10, 290, 290, 10,
+                              10, 10, 290, 290};
 
+    for (int i = 0; i < 3; ++i) {
 
-    HappyLittleLines();
-    // Create a line drawing function that takes 2 parameters:
-    // The x and y coordinates of the line's starting point
-    // and draws a line from that point to the center of the canvas.
-    // Draw at least 3 lines with that function. Use loop for that.
+        SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
+        SDL_RenderDrawLine( gRenderer, coordinates2[0][i], coordinates2[1][i],coordinates2[0][i+1],coordinates2[1][i+1]);
+
+    }
+    SDL_RenderDrawLine( gRenderer, coordinates2[0][3], coordinates2[1][3],coordinates2[0][0],coordinates2[1][0]);
+    int coordinates[8][2] = {
+
+            {50, 100},
+            {70, 70},
+            {80, 90},
+            {90, 90},
+            {100, 70},
+            {120, 100},
+            {85, 130},
+            {50, 100}
+
+    };
+    greenfox(**coordinates);
+
+    // Create a function that takes 1 parameter:
+    // An array of {x, y} points
+    // and connects them with green lines.
+    // Connect these to get a box: {{10, 10}, {290,  10}, {290, 290}, {10, 290}}
+    // Connect these: {{50, 100}, {70, 70}, {80, 90}, {90, 90}, {100, 70}, {120, 100}, {85, 130}, {50, 100}}
+
 }
 
 bool init()
@@ -79,7 +74,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Connect the dots", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;

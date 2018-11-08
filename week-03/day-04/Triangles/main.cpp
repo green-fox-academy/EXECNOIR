@@ -1,15 +1,13 @@
 #include <iostream>
 #include <SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 600;
+const int SCREEN_HEIGHT = 600;
 
 //Draws geometry on the canvas
 void draw();
+
 
 //Starts up SDL and creates window
 bool init();
@@ -22,51 +20,39 @@ SDL_Window* gWindow = nullptr;
 
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
-void HappyLittleLines()
-{
-    //srand (time(NULL));
-    SDL_RenderDrawLine(gRenderer, SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2, SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    int x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
-    int y = 0;
-    for (int i = 0; i < 3 ; ++i) {
 
-        y = y + SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
-
-        for (int j = 0; j < (SCREEN_WIDTH/2/10) ; ++j) {
-
-            x = x+10;
-            SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
-            SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-        }
-        x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
-    }
-    x = 0;
-    y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
-    for (int k = 0; k < 3 ; ++k) {
-
-        x = x + SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
-
-        for (int l = 0; l < (SCREEN_HEIGHT/2/10) ; ++l) {
-
-            y = y+10;
-            SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
-            SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-        }
-        y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
-    }
-
-}
 void draw()
 {
+    int xStart = 15;
+    int yStart = SCREEN_HEIGHT-15;
+    int xEnd = SCREEN_WIDTH-15;
+    int yEnd = SCREEN_HEIGHT-15;
+    for (int i = 0; i < SCREEN_HEIGHT/2 -15; i = i +15) {
+        SDL_SetRenderDrawColor( gRenderer,0, 0, 0, 0 );
+        SDL_RenderDrawLine(gRenderer,xStart+i, xEnd-i, yStart-i, yEnd-i );
+    }
 
+    int xStart2 = SCREEN_HEIGHT/2;
+    int yStart2 = SCREEN_HEIGHT/2;
+    int xEnd2 = 15;
+    int yEnd2 = SCREEN_HEIGHT-15;
 
-    HappyLittleLines();
-    // Create a line drawing function that takes 2 parameters:
-    // The x and y coordinates of the line's starting point
-    // and draws a line from that point to the center of the canvas.
-    // Draw at least 3 lines with that function. Use loop for that.
+    for (int i = 0; i < SCREEN_HEIGHT-15; i = i +30) {
+
+    SDL_SetRenderDrawColor( gRenderer,0, 0, 0, 0 );
+    SDL_RenderDrawLine(gRenderer,xStart2+i/2, yStart2+i/2, xEnd2+i, yEnd2 );
+    }
+    int xStart3 = SCREEN_HEIGHT/2;
+    int yStart3 = SCREEN_HEIGHT/2;
+    int xEnd3 = SCREEN_HEIGHT-15;
+    int yEnd3 = SCREEN_HEIGHT-15;
+
+    for (int i = 0; i < SCREEN_HEIGHT-15; i = i +30) {
+
+        SDL_SetRenderDrawColor( gRenderer,0, 0, 0, 0 );
+        SDL_RenderDrawLine(gRenderer,xStart3-i/2, yStart3+i/2, xEnd3-i, yEnd3 );
+    }
+
 }
 
 bool init()

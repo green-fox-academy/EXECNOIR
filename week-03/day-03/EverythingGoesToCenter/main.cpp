@@ -25,36 +25,38 @@ SDL_Renderer* gRenderer = nullptr;
 void HappyLittleLines()
 {
     //srand (time(NULL));
-    SDL_RenderDrawLine(gRenderer, SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2, SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    int x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
+   // SDL_RenderDrawLine(gRenderer, SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2, SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    int x = 0;
     int y = 0;
     for (int i = 0; i < 3 ; ++i) {
 
-        y = y + SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
 
-        for (int j = 0; j < (SCREEN_WIDTH/2/10) ; ++j) {
 
-            x = x+10;
+        for (int j = 0; j < (SCREEN_WIDTH/20) ; ++j) {
+
+
             SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
             SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
+            x = x+20;
         }
-        x = SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
+        y = y + SCREEN_HEIGHT/2;
+        x = 0;
     }
     x = 0;
-    y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
+    y = 0;
     for (int k = 0; k < 3 ; ++k) {
 
-        x = x + SCREEN_WIDTH/2-(SCREEN_WIDTH/2)/2;
 
-        for (int l = 0; l < (SCREEN_HEIGHT/2/10) ; ++l) {
 
-            y = y+10;
+        for (int l = 0; l < (SCREEN_HEIGHT/20) ; ++l) {
+
+
             SDL_SetRenderDrawColor(gRenderer, rand()%255, rand()%255, rand()%255, 0xFF /*A*/);
             SDL_RenderDrawLine(gRenderer, x, y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
+            y = y+20;
         }
-        y = SCREEN_HEIGHT/2-(SCREEN_HEIGHT/2)/2;
+        x = x + SCREEN_WIDTH/2;
+        y = 0;
     }
 
 }
@@ -113,6 +115,7 @@ void close()
 
 int main( int argc, char* args[] )
 {
+    srand(time(0));
     //Start up SDL and create window
     if( !init() )
     {

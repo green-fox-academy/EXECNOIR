@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(line_in_the_middle)
+project(EnvelopeStar)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -18,6 +18,6 @@ include_directories(${SDL2_GFX}/inc)
 file(GLOB gfx_inc "${SDL2_GFX}/inc/*.h")
 file(GLOB gfx_src "${SDL2_GFX}/src/*.c")
 
-add_executable(center_box_function main.cpp ${gfx_inc} ${gfx_src})
+add_executable(EnvelopeStar main.cpp ${gfx_inc} ${gfx_src})
 
-target_link_libraries(center_box_function ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(EnvelopeStar ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
