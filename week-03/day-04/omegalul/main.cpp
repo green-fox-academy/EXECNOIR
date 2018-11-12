@@ -1,13 +1,13 @@
 #include <iostream>
 #include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 600;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
 //Draws geometry on the canvas
 void draw();
-
 
 //Starts up SDL and creates window
 bool init();
@@ -20,80 +20,9 @@ SDL_Window* gWindow = nullptr;
 
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
-void PurpleIllusion(){
 
-    int xStart = 0;
-    int yStart = (SCREEN_HEIGHT/2);
-    int xEnd = SCREEN_WIDTH/2;
-    int yEnd = (SCREEN_HEIGHT/2);
-
-
-    for (int i = 15; i < SCREEN_HEIGHT/2; i = i+15) {
-
-        SDL_SetRenderDrawColor( gRenderer, 150, 50 ,150, 255);
-        SDL_RenderDrawLine( gRenderer, xStart+i, yStart, xEnd, yEnd+i );
-
-    }
-
-}
-void GreenIllusion(){
-
-    int xStart2 = (SCREEN_WIDTH/2);
-    int yStart2 = 0;
-    int xEnd2 = SCREEN_WIDTH/2;
-    int yEnd2 = SCREEN_WIDTH/2;
-
-
-    for (int i = 15; i < SCREEN_HEIGHT/2; i = i+15) {
-
-        SDL_SetRenderDrawColor( gRenderer, 150, 50 ,150, 255);
-        SDL_RenderDrawLine( gRenderer, xStart2, yStart2+i, xEnd2+i, yEnd2 );
-
-    }
-
-
-}
-void GreenIllusion2(){
-
-    int xStart2 = SCREEN_WIDTH;
-    int yStart2 = (SCREEN_WIDTH/2);
-    int xEnd2 = SCREEN_WIDTH/2;
-    int yEnd2 = SCREEN_WIDTH/2;
-
-
-    for (int i = 15; i < SCREEN_HEIGHT/2; i = i+15) {
-
-        SDL_SetRenderDrawColor( gRenderer, 150, 50 ,150, 255);
-        SDL_RenderDrawLine( gRenderer, xStart2-i, yStart2, xEnd2, yEnd2+i );
-
-    }
-
-
-}
-void GreenIllusion3(){
-
-    int move = 20;
-
-
-    for (int i = 0; i < SCREEN_HEIGHT/40-1; i = i+1) {
-
-        SDL_SetRenderDrawColor( gRenderer, 150, 50 ,150, 255);
-        SDL_RenderDrawLine( gRenderer, 0+move, SCREEN_WIDTH/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2-move );
-        SDL_RenderDrawLine( gRenderer, SCREEN_WIDTH-move, SCREEN_WIDTH/2, SCREEN_WIDTH/2, SCREEN_WIDTH/2+move );
-        SDL_RenderDrawLine( gRenderer, SCREEN_WIDTH/2, 0+move, SCREEN_WIDTH/2+move, SCREEN_WIDTH/2);
-        SDL_RenderDrawLine( gRenderer, 0+move, SCREEN_WIDTH/2, SCREEN_WIDTH/2, SCREEN_WIDTH/2+move );
-        move = move + 20;
-    }
-
-
-}
 void draw()
 {
-    //PurpleIllusion();
-    //GreenIllusion();
-    //GreenIllusion2();
-    GreenIllusion3();
-
 
 }
 
@@ -107,7 +36,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Starry night", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
