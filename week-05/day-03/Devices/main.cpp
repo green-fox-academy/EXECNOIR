@@ -37,6 +37,7 @@ int main( int argc, char* args[] )
 
     for (int j = 0; j < scanners.size(); ++j) {
         scanners[j]->scan();
+        std::cout << std::endl;
     }
 
     Copier copy4(5, 5, 130);
