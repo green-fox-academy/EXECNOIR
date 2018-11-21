@@ -10,7 +10,7 @@
 int fib(int x);
 
 int main() {
-    std::cout << fib(7) << std::endl;
+    std::cout << fib(6) << std::endl;
     return 0;
 }
 int fib(int x){
