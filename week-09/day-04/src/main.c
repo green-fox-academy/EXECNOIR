@@ -173,6 +173,8 @@ int main(void) {
 			gamestate = END;
 			break;
 		case END:
+			start_time = 0;
+			end_time = 0;
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_RESET);
 			roundcounter++;
