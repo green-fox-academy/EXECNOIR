@@ -219,30 +219,30 @@ void EXTI9_5_IRQHandler()
 
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (ledflash != BLINKSLOW) {
+		if (butstate == PUSH) {
+			printf("push\r\n");
+			time1 = HAL_GetTick();
+			butstate = RELEASE;
+		} else if (butstate == RELEASE) {
 
-	if (butstate == PUSH) {
-		printf("push\r\n");
-		time1 = HAL_GetTick();
-		butstate = RELEASE;
-	} else if (butstate == RELEASE)
-		{
+			time2 = HAL_GetTick();
+			timer = time2 - time1;
+			printf("release, %d\r\n", timer);
+			if (timer <= 250 && timer >= 50) {
+				//HAL_GPIO_DeInit(GPIOI, &button);
+				//HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+				time1 = time2;
+				TIM2->PSC <<= 1;
+				printf("jonyomas\r\n");
+				ledflash = BLINKSLOW;
 
-		time2 = HAL_GetTick();
-		timer = time2 - time1;
-		printf("release, %d\r\n", timer);
-		if (timer <= 250 && timer >= 50) {
-			//HAL_GPIO_DeInit(GPIOI, &button);
-			HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
-			time1 = time2;
-			TIM2->PSC <<= 1;
-			printf("jonyomas\r\n");
-			ledflash = BLINKSLOW;
+				TIM2->CNT = 0;
 
-			//TIM2->CNT = 0;
-
-		} else {
-			printf("timing is off mah dude\r\n");
-			butstate = PUSH;
+			} else {
+				printf("timing is off mah dude\r\n");
+				butstate = PUSH;
+			}
 		}
 	}
 }
@@ -260,13 +260,13 @@ void TIM4_IRQHandler()
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	BSP_LED_Toggle(LED_GREEN);
 	if (ledflash == BLINKSLOW) {
-		HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+		//HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 		returncounter++;
-		if (returncounter == 6) {
+		if (returncounter == 5) {
 			ledflash = BLINK;
 			returncounter = 0;
 			TIM2->PSC >>= 1;
-			HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+			//HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 			//HAL_GPIO_Init(GPIOI, &button);
 			butstate = PUSH;
 
