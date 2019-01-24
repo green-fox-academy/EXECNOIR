@@ -95,6 +95,9 @@ void mouseHandler(int event, int x, int y, int, void*)
 
                 cv::imshow(DrawingWindow, image);
 
+    }else if( event == cv::EVENT_RBUTTONDOWN)
+    {
+        rc = sqlite3_exec(db, "SELECT * FROM angles;", callback, 0, &zErrMsg);
     }
 }
 
