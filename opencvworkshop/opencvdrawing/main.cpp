@@ -59,6 +59,7 @@ int main() {
     cv::setMouseCallback( "Drawing", mouseHandler, 0 );
     cv::imshow(DrawingWindow, image);
     cv::waitKey(0);
+    sqlite3_close(db);
 
 
     return 0;
