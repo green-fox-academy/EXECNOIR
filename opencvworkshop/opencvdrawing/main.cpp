@@ -1,9 +1,20 @@
 #include <iostream>
+#include <stdio.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+#include <sqlite3.h>
 
 #define PI 3.14159265
+
+static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+    int i;
+    for(i = 0; i<argc; i++) {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
+}
 
 
 typedef enum quadrant{
@@ -14,7 +25,11 @@ typedef enum quadrant{
 }quadrant_t;
 
 quadrant_t quadrant = TOP_RIGHT;
-
+sqlite3 *db;
+char *zErrMsg = 0;
+int rc;
+char* sql;
+char buffer[50];
 char DrawingWindow[] = "Drawing";
 cv::Point point;
 cv::Point tracker;
@@ -26,6 +41,15 @@ void LineFromTheRight(cv::Mat image, cv::Point start, cv::Point end);
 void mouseHandler(int, int, int, int, void*);
 
 int main() {
+
+    rc = sqlite3_open("../angles.db", &db);
+
+    if( rc ) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return(0);
+    } else {
+        fprintf(stderr, "Opened database successfully\n");
+    }
 
     CircleInTheMiddle(image, cv::Point(400/2,400/2));
     LineFromTheRight(image, cv::Point(400/2, 400/2), cv::Point(400, 400/2));
@@ -58,8 +82,17 @@ void mouseHandler(int event, int x, int y, int, void*)
             printf("%d, %d\n",point.x, point.y );
             cv::line(image, point, cv::Point(400/2, 400/2), cv::Scalar(255,255,255), 2, cv::LINE_8);
             cv::line(image, point, cv::Point(point.x, 400/2), cv::Scalar(255, 255, 255), 2, cv::LINE_8);
-            printf("%.2f\n", getAngle(point));
-            cv::imshow(DrawingWindow, image);
+            sprintf(buffer, "INSERT INTO angles(date, angle) VALUES( DATETIME(), %.2f );", getAngle(point));
+            rc = sqlite3_exec(db, buffer, callback, 0, &zErrMsg);
+
+            if( rc != SQLITE_OK ){
+            fprintf(stderr, "SQL error: %s\n", zErrMsg);
+            sqlite3_free(zErrMsg);
+            } else {
+                fprintf(stdout, "Records created successfully\n");
+            }
+
+                cv::imshow(DrawingWindow, image);
 
     }
 }
